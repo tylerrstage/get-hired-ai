@@ -1,0 +1,28 @@
+.navbar {
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-sizing: border-box;
+}
+
+.navbar-inner {
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+    box-sizing: border-box;
+}
+
+.navbar-logo {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #2952e3;
+    letter-spacing: 0.01em;
+}
+
+@media (max-width: 900px) {
+    .navbar-inner {
+        padding: 0 1.5rem;
+    }
+}

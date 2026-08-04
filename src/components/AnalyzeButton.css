@@ -1,0 +1,28 @@
+.analyze-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    background-color: #2952e3;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    box-shadow: 0 4px 12px rgba(41, 82, 227, 0.25);
+    transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.analyze-button:hover {
+    background-color: #2145c9;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(41, 82, 227, 0.32);
+}
+
+.analyze-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(41, 82, 227, 0.25);
+}

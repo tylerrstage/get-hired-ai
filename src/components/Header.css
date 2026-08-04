@@ -1,0 +1,26 @@
+.header {
+    padding: 2.75rem 0 2rem;
+    max-width: 640px;
+}
+
+.header-title {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #0f1729;
+    margin: 0 0 0.85rem;
+    line-height: 1.15;
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #6b7280;
+    line-height: 1.55;
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .header-title {
+        font-size: 2.1rem;
+    }
+}

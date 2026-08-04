@@ -1,0 +1,280 @@
+.results-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 1.75rem 2rem 2rem;
+    overflow: hidden;
+}
+
+.results-card::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(41, 82, 227, 0.1) 0%, rgba(41, 82, 227, 0) 70%);
+    pointer-events: none;
+}
+
+.results-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.results-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f1729;
+    margin: 0 0 0.3rem;
+}
+
+.results-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.results-sparkle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #eef1fd;
+    color: #6d5bd0;
+    flex-shrink: 0;
+}
+
+/* Stats grid */
+.results-stats {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    align-items: stretch;
+    margin: 1.75rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.score-ring {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.25rem;
+}
+
+.score-ring-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+}
+
+.score-ring-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f1729;
+}
+
+.score-ring-max {
+    font-size: 0.85rem;
+    color: #9aa3b5;
+    font-weight: 600;
+}
+
+.stat-card {
+    background-color: #f7f9fd;
+    border: 1px solid #eef0f7;
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.stat-card--wide {
+    grid-column: 2 / 4;
+}
+
+.stat-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.stat-card-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f1729;
+}
+
+.stat-card-value--success {
+    color: #16a34a;
+}
+
+.results-divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 0.25rem 0 1.5rem;
+}
+
+/* Sections */
+.results-section {
+    margin-bottom: 1.5rem;
+}
+
+.results-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #0f1729;
+    margin-bottom: 0.85rem;
+}
+
+.results-section-heading--success {
+    color: #16a34a;
+}
+
+.results-section-heading--success span {
+    color: #0f1729;
+}
+
+.results-section-heading--warning {
+    color: #dc2626;
+}
+
+.results-section-heading--warning span {
+    color: #0f1729;
+}
+
+.strengths-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.strengths-list li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: 0.9rem;
+    color: #374151;
+    line-height: 1.4;
+}
+
+.strengths-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #16a34a;
+}
+
+.keyword-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.keyword-pill {
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.keyword-pill--danger {
+    background-color: #fde8e8;
+    color: #dc2626;
+}
+
+.keyword-pill--info {
+    background-color: #dbe7ff;
+    color: #2952e3;
+}
+
+/* AI suggestion box */
+.suggestions-box {
+    background-color: #eef1fd;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.suggestions-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2952e3;
+    margin-bottom: 0.75rem;
+}
+
+.suggestions-text {
+    font-size: 0.9rem;
+    color: #374151;
+    line-height: 1.5;
+    margin: 0 0 0.6rem;
+}
+
+.suggestions-text:last-child {
+    margin-bottom: 0;
+}
+
+.suggestions-action {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f1729;
+    margin: 0 0 0.6rem;
+}
+
+@media (max-width: 640px) {
+    .results-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .score-ring {
+        grid-column: 1 / 3;
+        grid-row: 1;
+        padding-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-card--wide {
+        grid-column: 1 / 3;
+    }
+}
