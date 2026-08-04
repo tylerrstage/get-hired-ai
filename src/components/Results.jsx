@@ -92,7 +92,7 @@ function Results(){
                         <TargetIcon width={16} height={16} />
                         <span>Readability Score</span>
                     </div>
-                    <div className="stat-card-value">Professional (Grade 12)</div>
+                    <div className="stat-card-value">Professional</div>
                 </div>
             </div>
 
