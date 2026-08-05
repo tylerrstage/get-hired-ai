@@ -7,6 +7,7 @@ from tokenizer import tokenize, count_word_frequencies, top_n_words
 from keyword_match import analyze_keyword_match
 from readability import flesch_kincaid_grade, readability_label
 from format_check import check_format, has_email, has_phone_number, has_required_sections
+from ai_review import get_ai_review
 
 
 # Every item (missing keyword) needs more than a single value.
@@ -65,20 +66,20 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
     format_passed = check_format(resume_text)
     print(f"has_email = {has_email(resume_text)}, has_phone = {has_phone_number(resume_text)}, has_sections = {has_required_sections(resume_text)}")
 
+    ai_result = get_ai_review(
+        resume_text, job_description, keyword_match_percent, missing_keyword_words, readability, format_passed
+    )
+
     return AnalysisResponse(
         score = 78,
         score_max = 100,
         keyword_match_percent = keyword_match_percent,
         format_check_passed = format_passed,
         readability_label = readability,
-        strengths = [
-            "Action verb usage is strong in the most recent roles.",
-            "Clear, parsable contact information block.",
-            "Education section is well-structured and easily extracted.",
-        ],
+        strengths = ai_result["strengths"],
          missing_keywords = [
             MissingKeyword(label = word, variant = "danger") for word in missing_keyword_words
         ],
-        suggestion_text = "Your summary statement lacks quantifiable metrics.",
-        suggestion_action = "Add Projects",
+        suggestion_text = ai_result["suggestion_text"],
+        suggestion_action = ai_result["suggestion_action"],
     )

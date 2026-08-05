@@ -14,7 +14,7 @@ dist-ssr
 .claude
 backend/venv
 backend/__pycache__
-
+backend/.env
 
 # Editor directories and files
 .vscode/*
