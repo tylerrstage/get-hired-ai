@@ -46,18 +46,21 @@ RESUME:
 JOB DESCRIPTION:
 {job_description}
 
-ALREADY-COMPUTED METRICS (use these, do not recalculate or contradict them):
-- Keyword match with job description: {keyword_match_percent}%
-- Missing keywords: {missing_keywords_str}
+SUPPORTING SIGNALS (already computed, form your own judgment of the resume against the job description first, then use these as corroborating context):
+- Technical keyword match: {keyword_match_percent}% of the technical skills/tools/concepts named in the job posting also appear on the resume.
+- Technical keywords named in the job posting but absent from the resume: {missing_keywords_str}
 - Readability level: {readability}
 - Standard formatting check passed: {format_passed}
 
-Score overall_fit_score using this rubric:
+Score overall_fit_score using this rubric. The job description separates REQUIRED qualifications from PREFERRED (nice-to-have) qualifications — weight these very differently:
+- Meeting nearly all REQUIRED qualifications should put a resume at 61+ even if several PREFERRED qualifications are missing. Missing PREFERRED items should cost a few points each, not drop the resume into a lower band.
+- Only let missing PREFERRED qualifications pull the score below 61 if there are also real gaps in the REQUIRED qualifications.
+
 - 0-20: Fundamentally different field, virtually no relevant skills.
-- 21-40: Some transferable skills, but missing most core requirements.
-- 41-60: Solid transferable skills and relevant experience, but a real gap in one or more core requirements.
-- 61-80: Strong alignment with most core requirements, only minor gaps.
-- 81-100: Excellent, near-ideal match for this role's core requirements.
+- 21-40: Some transferable skills, but missing most required qualifications.
+- 41-60: Solid transferable skills and relevant experience, but a real gap in one or more required qualifications.
+- 61-80: Meets nearly all required qualifications, only minor gaps (which may include several missing preferred qualifications).
+- 81-100: Excellent, near-ideal match for both the required and most preferred qualifications.
 
 Based on all of the above, identify 3 specific strengths of this resume relative to this job, one clear piece of actionable feedback on the resume's weakest area, a short 2-4 word suggested action, and an overall fit score from 0-100."""
 

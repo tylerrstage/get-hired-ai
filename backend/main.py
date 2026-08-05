@@ -72,7 +72,7 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
     )
 
     overall_score = compute_overall_score(
-        keyword_match_percent, grade, format_passed, ai_result["overall_fit_score"]
+        grade, format_passed, ai_result["overall_fit_score"]
     )
 
     return AnalysisResponse(

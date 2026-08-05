@@ -7,6 +7,7 @@ STOPWORDS = {
     "be", "been", "being", "this", "that", "these", "those", "it", "its",
     "from", "into", "than", "such", "not", "no", "we", "you", "your", "our",
     "i", "he", "she", "they", "them", "his", "her", "their", "will", "can",
+    "what", "which", "who", "how", "when", "where", "why",
     '•',
 }
 
