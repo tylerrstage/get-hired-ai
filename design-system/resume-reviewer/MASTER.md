@@ -109,11 +109,10 @@ curve). Change the value in one place in `index.css` and every animation using i
 This is a **single utility screen**, not a landing page — the tool's default landing-page
 pattern (hero/feature-grid/testimonials/CTA) does not apply. Actual structure:
 
-1. NavBar (brand left, primary "Analyze Resume" action right)
+1. NavBar (brand only)
 2. Header (title + one-line value prop)
-3. Two-column working area: inputs (resume upload + job description) on the left, results on
-   the right — both columns start at the same top offset now that the action button lives in
-   the nav instead of above the results panel
+3. Two-column working area: inputs (resume upload + job description) on the left, action +
+   results on the right
 4. Results render inline in the same screen once analysis completes — no navigation away
 
 ---

@@ -24,19 +24,7 @@
 }
 
 .results-card--reveal {
-    animation: reveal-in var(--motion-duration-reveal) var(--motion-ease) both;
-}
-
-.results-card::before {
-    content: "";
-    position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(41, 82, 227, 0.1) 0%, rgba(41, 82, 227, 0) 70%);
-    pointer-events: none;
+    animation: reveal-in 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .results-header {
@@ -59,18 +47,6 @@
     font-size: 0.9rem;
     color: var(--color-foreground-muted);
     margin: 0;
-}
-
-.results-sparkle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
-    background-color: var(--color-accent-bg);
-    color: var(--color-accent);
-    flex-shrink: 0;
 }
 
 /* Stats grid */

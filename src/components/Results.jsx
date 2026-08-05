@@ -7,7 +7,6 @@ import {
     CheckCircleIcon,
     WarningIcon,
     LightbulbIcon,
-    SparkleIcon,
 } from "./icons";
 
 const RING_RADIUS = 52;
@@ -68,9 +67,6 @@ function Results({ result }){
                     <h2 className="results-title">Detailed Analysis</h2>
                     <p className="results-subtitle">Based on standard Applicant Tracking Systems (ATS)</p>
                 </div>
-                <span className="results-sparkle">
-                    <SparkleIcon />
-                </span>
             </div>
 
             <div className="results-stats">
