@@ -6,7 +6,7 @@
 .header-title {
     font-size: 2.75rem;
     font-weight: 800;
-    color: #0f1729;
+    color: var(--color-foreground);
     margin: 0 0 0.85rem;
     line-height: 1.15;
 }
@@ -14,7 +14,7 @@
 .header-subtitle {
     font-size: 1rem;
     font-weight: 400;
-    color: #6b7280;
+    color: var(--color-foreground-muted);
     line-height: 1.55;
     margin: 0;
 }

@@ -4,11 +4,27 @@
     flex-direction: column;
     width: 100%;
     box-sizing: border-box;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 1.75rem 2rem 2rem;
     overflow: hidden;
+    box-shadow: var(--shadow-float);
+}
+
+@keyframes reveal-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.results-card--reveal {
+    animation: reveal-in var(--motion-duration-reveal) var(--motion-ease) both;
 }
 
 .results-card::before {
@@ -35,13 +51,13 @@
 .results-title {
     font-size: 1.4rem;
     font-weight: 800;
-    color: #0f1729;
+    color: var(--color-foreground);
     margin: 0 0 0.3rem;
 }
 
 .results-subtitle {
     font-size: 0.9rem;
-    color: #6b7280;
+    color: var(--color-foreground-muted);
     margin: 0;
 }
 
@@ -51,9 +67,9 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 10px;
-    background-color: #eef1fd;
-    color: #6d5bd0;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-accent-bg);
+    color: var(--color-accent);
     flex-shrink: 0;
 }
 
@@ -93,19 +109,19 @@
 .score-ring-value {
     font-size: 2rem;
     font-weight: 800;
-    color: #0f1729;
+    color: var(--color-foreground);
 }
 
 .score-ring-max {
     font-size: 0.85rem;
-    color: #9aa3b5;
+    color: var(--color-foreground-subtle);
     font-weight: 600;
 }
 
 .stat-card {
-    background-color: #f7f9fd;
+    background-color: var(--color-surface-muted);
     border: 1px solid #eef0f7;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     padding: 1rem 1.1rem;
     display: flex;
     flex-direction: column;
@@ -123,22 +139,22 @@
     gap: 0.4rem;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--color-foreground-muted);
 }
 
 .stat-card-value {
     font-size: 1.15rem;
     font-weight: 700;
-    color: #0f1729;
+    color: var(--color-foreground);
 }
 
 .stat-card-value--success {
-    color: #16a34a;
+    color: var(--color-success);
 }
 
 .results-divider {
     border: none;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-border);
     margin: 0.25rem 0 1.5rem;
 }
 
@@ -154,24 +170,24 @@
     font-size: 0.8rem;
     font-weight: 800;
     letter-spacing: 0.05em;
-    color: #0f1729;
+    color: var(--color-foreground);
     margin-bottom: 0.85rem;
 }
 
 .results-section-heading--success {
-    color: #16a34a;
+    color: var(--color-success);
 }
 
 .results-section-heading--success span {
-    color: #0f1729;
+    color: var(--color-foreground);
 }
 
 .results-section-heading--warning {
-    color: #dc2626;
+    color: var(--color-destructive);
 }
 
 .results-section-heading--warning span {
-    color: #0f1729;
+    color: var(--color-foreground);
 }
 
 .strengths-list {
@@ -187,7 +203,7 @@
     position: relative;
     padding-left: 1.1rem;
     font-size: 0.9rem;
-    color: #374151;
+    color: var(--color-foreground);
     line-height: 1.4;
 }
 
@@ -199,7 +215,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #16a34a;
+    background-color: var(--color-success);
 }
 
 .keyword-pills {
@@ -216,19 +232,19 @@
 }
 
 .keyword-pill--danger {
-    background-color: #fde8e8;
-    color: #dc2626;
+    background-color: var(--color-danger-bg);
+    color: var(--color-destructive);
 }
 
 .keyword-pill--info {
-    background-color: #dbe7ff;
-    color: #2952e3;
+    background-color: var(--color-info-bg);
+    color: var(--color-primary);
 }
 
 /* AI suggestion box */
 .suggestions-box {
-    background-color: #eef1fd;
-    border-radius: 12px;
+    background-color: var(--color-accent-bg);
+    border-radius: var(--radius-md);
     padding: 1.25rem 1.5rem;
     position: relative;
     z-index: 1;
@@ -240,13 +256,13 @@
     gap: 0.5rem;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #2952e3;
+    color: var(--color-primary);
     margin-bottom: 0.75rem;
 }
 
 .suggestions-text {
     font-size: 0.9rem;
-    color: #374151;
+    color: var(--color-foreground);
     line-height: 1.5;
     margin: 0 0 0.6rem;
 }
@@ -258,7 +274,7 @@
 .suggestions-action {
     font-size: 0.9rem;
     font-weight: 700;
-    color: #0f1729;
+    color: var(--color-foreground);
     margin: 0 0 0.6rem;
 }
 

@@ -35,9 +35,14 @@
     min-width: 0;
 }
 
-.app-right-top {
-    display: flex;
-    justify-content: flex-end;
+.app-error {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-danger-bg);
+    color: var(--color-destructive);
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 @media (max-width: 900px) {
@@ -52,9 +57,5 @@
     .app-left {
         flex: 1 1 auto;
         width: 100%;
-    }
-
-    .app-right-top {
-        justify-content: flex-start;
     }
 }

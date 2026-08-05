@@ -4,13 +4,13 @@ import NavBar from './components/NavBar'
 import Header from './components/Header'
 import ResumeUpload from './components/ResumeUpload'
 import JobDesc from './components/JobDesc'
-import AnalyzeButton from './components/AnalyzeButton'
 import Results from './components/Results'
 
 function App() {
   const [resumeFile, setResumeFile] = useState(null);
   const [jobDescription, setJobDescription] = useState("");
   const [analysisResult, setAnalysisResult] = useState(null);
+  const [resultVersion, setResultVersion] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -35,6 +35,7 @@ function App() {
 
       const data = await response.json();
       setAnalysisResult(data);
+      setResultVersion((v) => v + 1);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -44,24 +45,25 @@ function App() {
 
   return (
     <div className='app-page'>
-      <NavBar />
+      <NavBar
+        onAnalyze={handleAnalyze}
+        analyzeDisabled={!resumeFile || !jobDescription || isLoading}
+        isLoading={isLoading}
+      />
       <div className='app-container'>
         <Header />
         <div className='app-layout'>
-          <div className='app-left'>
+          <div className='app-left animate-in animate-in-delay-1'>
             <ResumeUpload onFileSelect={setResumeFile} />
             <JobDesc value={jobDescription} onChange={setJobDescription} />
           </div>
-          <div className='app-right'>
-            <div className='app-right-top'>
-              <AnalyzeButton
-                onClick={handleAnalyze}
-                disabled={!resumeFile || !jobDescription || isLoading}
-                isLoading={isLoading}
-              />
-            </div>
-            {error && <p>{error}</p>}
-            <Results result={analysisResult} />
+          <div className='app-right animate-in animate-in-delay-2'>
+            {error && (
+              <p className='app-error' role='alert'>
+                {error}
+              </p>
+            )}
+            <Results key={resultVersion} result={analysisResult} />
           </div>
         </div>
       </div>

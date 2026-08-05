@@ -7,7 +7,7 @@
 .jobdesc-label {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #1a2036;
+    color: var(--color-foreground);
     margin-bottom: 0.6rem;
 }
 
@@ -15,15 +15,16 @@
     width: 100%;
     min-height: 260px;
     box-sizing: border-box;
-    border: 1px solid #d7dce6;
-    border-radius: 10px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
     padding: 0.9rem 1rem;
     font-size: 0.9rem;
     font-family: inherit;
-    color: #1a2036;
+    color: var(--color-foreground);
     resize: none;
-    outline: none;
-    background-color: #ffffff;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-float);
+    transition: border-color var(--transition-fast);
 }
 
 .jobdesc-textarea:focus {
@@ -31,5 +32,5 @@
 }
 
 .jobdesc-textarea::placeholder {
-    color: #9aa3b5;
+    color: var(--color-foreground-subtle);
 }

@@ -19,13 +19,13 @@ function ScoreRing({ score, max }) {
     return (
         <div className="score-ring">
             <svg width="130" height="130" viewBox="0 0 130 130">
-                <circle cx="65" cy="65" r={RING_RADIUS} fill="none" stroke="#e6ebfa" strokeWidth="12" />
+                <circle cx="65" cy="65" r={RING_RADIUS} fill="none" stroke="var(--color-info-bg)" strokeWidth="12" />
                 <circle
                     cx="65"
                     cy="65"
                     r={RING_RADIUS}
                     fill="none"
-                    stroke="#2952e3"
+                    stroke="var(--color-primary)"
                     strokeWidth="12"
                     strokeLinecap="round"
                     strokeDasharray={`${progress} ${RING_CIRCUMFERENCE}`}
@@ -62,7 +62,7 @@ function Results({ result }){
     } = result;
 
     return(
-        <div className="results-card">
+        <div className="results-card results-card--reveal">
             <div className="results-header">
                 <div>
                     <h2 className="results-title">Detailed Analysis</h2>
