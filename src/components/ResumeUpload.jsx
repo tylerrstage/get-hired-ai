@@ -2,9 +2,12 @@ import React, { useRef, useState } from "react";
 import './ResumeUpload.css';
 import { UploadIcon } from "./icons";
 
-function ResumeUpload(){
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
+
+function ResumeUpload({ onFileSelect}){
     const inputRef = useRef(null);
     const [fileName, setFileName] = useState(null);
+    const [error, setError] = useState(null);
 
     const handleClick = () => {
         inputRef.current.click();
@@ -12,7 +15,28 @@ function ResumeUpload(){
 
     const handleChange = (event) => {
         const file = event.target.files?.[0];
-        if (file) setFileName(file.name);
+        if (!file) return;
+
+        const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+        if (!isPdf) {
+            setError("Only PDF files are supported.");
+            setFileName(null);
+            onFileSelect(null);
+            event.target.value = "";
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+            setError("File must be 5MB or smaller.");
+            setFileName(null);
+            onFileSelect(null);
+            event.target.value = "";
+            return;
+        }
+
+        setError(null);
+        setFileName(file.name);
+        onFileSelect(file);
     }
 
     return(
@@ -25,10 +49,11 @@ function ResumeUpload(){
             <button type="button" className="upload-browse-btn">
                 {fileName ?? "Browse Files"}
             </button>
+            {error && <p className="upload-error">{error}</p>}
             <input
                 ref={inputRef}
                 type="file"
-                accept=".pdf,.docx"
+                accept="application/pdf,.pdf"
                 style={{ display: "none" }}
                 onChange={handleChange}
             />

@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi import File, Form, UploadFile
 from pdf_parser import extract_text_from_pdf
@@ -30,6 +30,8 @@ class AnalysisResponse(BaseModel):
 
 app = FastAPI()
 
+MAX_RESUME_SIZE_BYTES = 5 * 1024 * 1024  # 5MB
+
 # Since Vite and FastAPI run on different ports, the browser, by default, blocks them from making fetch requests to one another.
 # This code intercepts every response and allows all HTTP methods (GET, POST, etc) and request headers to run from one origin to another.
 app.add_middleware(
@@ -47,7 +49,15 @@ def read_root():
 # Takes resume from user input, calls pdf_parser to extract text, and returns an analysis response.
 @app.post("/analyze", response_model = AnalysisResponse)
 async def analyze(resume: UploadFile = File(...), job_description: str = Form(...)):
+    is_pdf = resume.content_type == "application/pdf" or (resume.filename or "").lower().endswith(".pdf")
+    if not is_pdf:
+        raise HTTPException(status_code=400, detail="Only PDF files are supported.")
+
     contents = await resume.read()
+
+    if len(contents) > MAX_RESUME_SIZE_BYTES:
+        raise HTTPException(status_code=400, detail="Resume file must be 5MB or smaller.")
+
     resume_text = extract_text_from_pdf(contents)
 
     resume_tokens = tokenize(resume_text)

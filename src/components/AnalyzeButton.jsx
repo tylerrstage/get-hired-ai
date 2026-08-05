@@ -2,11 +2,11 @@ import React from "react";
 import './AnalyzeButton.css';
 import { ChartIcon } from "./icons";
 
-function AnalyzeButton(){
+function AnalyzeButton({ onClick, disabled, isLoading }){
     return(
-        <button type="button" className="analyze-button">
+        <button type="button" className="analyze-button" onClick={onClick} disabled={disabled}>
             <ChartIcon width={18} height={18} />
-            Analyze Resume
+            {isLoading ? "Analyzing..." : "Analyze Resume"}
         </button>
     )
 }

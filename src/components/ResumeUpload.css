@@ -11,11 +11,10 @@
     border: 2px dashed #c7cee0;
     padding: 2rem 1.5rem;
     text-align: center;
-    cursor: pointer;
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.upload-card:hover {
+.upload-card:has(.upload-browse-btn:hover) {
     background-color: #f0f4ff;
     border-color: #9db3ee;
 }
@@ -59,4 +58,10 @@
 
 .upload-browse-btn:hover {
     background-color: #d5e0fb;
+}
+
+.upload-error {
+    font-size: 0.85rem;
+    color: #c62828;
+    margin: 0.75rem 0 0;
 }

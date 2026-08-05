@@ -10,23 +10,8 @@ import {
     SparkleIcon,
 } from "./icons";
 
-const SCORE = 78;
-const SCORE_MAX = 100;
 const RING_RADIUS = 52;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
-
-const strengths = [
-    "Action verb usage is strong in the most recent roles.",
-    "Clear, parsable contact information block.",
-    "Education section is well-structured and easily extracted.",
-];
-
-const missingKeywords = [
-    { label: "Agile Methodology", variant: "danger" },
-    { label: "Python", variant: "danger" },
-    { label: "Cross-functional Collaboration", variant: "danger" },
-    { label: "AWS", variant: "info" },
-];
 
 function ScoreRing({ score, max }) {
     const progress = (score / max) * RING_CIRCUMFERENCE;
@@ -55,7 +40,27 @@ function ScoreRing({ score, max }) {
     );
 }
 
-function Results(){
+function Results({ result }){
+    if (!result) {
+        return (
+            <div className="results-card">
+                <p>Upload a resume and job description, then click Analyze to see your report.</p>
+            </div>
+        );
+    }
+
+    const {
+        score,
+        score_max,
+        keyword_match_percent,
+        format_check_passed,
+        readability_label,
+        strengths,
+        missing_keywords,
+        suggestion_text,
+        suggestion_action,
+    } = result;
+
     return(
         <div className="results-card">
             <div className="results-header">
@@ -69,14 +74,14 @@ function Results(){
             </div>
 
             <div className="results-stats">
-                <ScoreRing score={SCORE} max={SCORE_MAX} />
+                <ScoreRing score={score} max={score_max} />
 
                 <div className="stat-card">
                     <div className="stat-card-heading">
                         <ChartIcon width={16} height={16} />
                         <span>Keyword Match</span>
                     </div>
-                    <div className="stat-card-value">65%</div>
+                    <div className="stat-card-value">{keyword_match_percent}%</div>
                 </div>
 
                 <div className="stat-card">
@@ -84,7 +89,9 @@ function Results(){
                         <DocumentIcon width={16} height={16} />
                         <span>Format Check</span>
                     </div>
-                    <div className="stat-card-value stat-card-value--success">Passed</div>
+                    <div className={`stat-card-value ${format_check_passed ? "stat-card-value--success" : ""}`}>
+                        {format_check_passed ? "Passed" : "Failed"}
+                    </div>
                 </div>
 
                 <div className="stat-card stat-card--wide">
@@ -92,7 +99,7 @@ function Results(){
                         <TargetIcon width={16} height={16} />
                         <span>Readability Score</span>
                     </div>
-                    <div className="stat-card-value">Professional</div>
+                    <div className="stat-card-value">{readability_label}</div>
                 </div>
             </div>
 
@@ -116,7 +123,7 @@ function Results(){
                     <span>MISSING KEYWORDS</span>
                 </div>
                 <div className="keyword-pills">
-                    {missingKeywords.map((keyword) => (
+                    {missing_keywords.map((keyword) => (
                         <span key={keyword.label} className={`keyword-pill keyword-pill--${keyword.variant}`}>
                             {keyword.label}
                         </span>
@@ -129,15 +136,8 @@ function Results(){
                     <LightbulbIcon width={18} height={18} />
                     <span>AI Suggested Improvements</span>
                 </div>
-                <p className="suggestions-text">
-                    Your summary statement lacks quantifiable metrics. Consider adding specific
-                    achievements to increase impact.
-                </p>
-                <p className="suggestions-action">Suggested Action: Add Projects</p>
-                <p className="suggestions-text">
-                    To cover missing 'Python' and 'AWS' keywords, consider adding a distinct
-                    "Technical Projects" section if you have relevant portfolio items.
-                </p>
+                <p className="suggestions-text">{suggestion_text}</p>
+                <p className="suggestions-action">Suggested Action: {suggestion_action}</p>
             </div>
         </div>
     )
