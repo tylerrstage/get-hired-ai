@@ -4,6 +4,7 @@ from fastapi import File, Form, UploadFile
 from pdf_parser import extract_text_from_pdf
 from fastapi.middleware.cors import CORSMiddleware
 from tokenizer import tokenize, count_word_frequencies, top_n_words
+from keyword_match import analyze_keyword_match
 
 
 # Every item (missing keyword) needs more than a single value.
@@ -46,6 +47,12 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
     resume_text = extract_text_from_pdf(contents)
 
     resume_tokens = tokenize(resume_text)
+    job_tokens = tokenize(job_description)
+
+    keyword_match_percent, missing_keyword_words = analyze_keyword_match(
+        " ".join(resume_tokens), " ".join(job_tokens)
+    )
+
     resume_frequencies = count_word_frequencies(resume_tokens)
     print("Top resume words: ", top_n_words(resume_frequencies))
     print(resume_text)
@@ -53,7 +60,7 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
     return AnalysisResponse(
         score = 78,
         score_max = 100,
-        keyword_match_percent = 65,
+        keyword_match_percent = keyword_match_percent,
         format_check_passed = True,
         readability_label = "Professional",
         strengths = [
@@ -62,9 +69,7 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
             "Education section is well-structured and easily extracted.",
         ],
          missing_keywords = [
-            MissingKeyword(label = "Agile Methodology", variant = "danger"),
-            MissingKeyword(label = "Python", variant = "danger"),
-            MissingKeyword(label = "AWS", variant = "info"),
+            MissingKeyword(label = word, variant = "danger") for word in missing_keyword_words
         ],
         suggestion_text = "Your summary statement lacks quantifiable metrics.",
         suggestion_action = "Add Projects",
