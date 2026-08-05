@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tokenizer import tokenize, count_word_frequencies, top_n_words
 from keyword_match import analyze_keyword_match
 from readability import flesch_kincaid_grade, readability_label
+from format_check import check_format, has_email, has_phone_number, has_required_sections
 
 
 # Every item (missing keyword) needs more than a single value.
@@ -61,11 +62,14 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
     grade = flesch_kincaid_grade(resume_text)
     readability = readability_label(grade)
 
+    format_passed = check_format(resume_text)
+    print(f"has_email = {has_email(resume_text)}, has_phone = {has_phone_number(resume_text)}, has_sections = {has_required_sections(resume_text)}")
+
     return AnalysisResponse(
         score = 78,
         score_max = 100,
         keyword_match_percent = keyword_match_percent,
-        format_check_passed = True,
+        format_check_passed = format_passed,
         readability_label = readability,
         strengths = [
             "Action verb usage is strong in the most recent roles.",
