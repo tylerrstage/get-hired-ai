@@ -45,7 +45,7 @@ def readability_label(grade: float) -> str:
     rounded = round(grade)
     if grade <= 8:
         return f"Simple (Grade {rounded})"
-    elif grade <= 12:
+    elif grade <= 14:
         return f"Professional (Grade {rounded})"
     else:
         return f"Overly Complex (Grade {rounded})"

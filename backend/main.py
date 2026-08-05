@@ -8,6 +8,7 @@ from keyword_match import analyze_keyword_match
 from readability import flesch_kincaid_grade, readability_label
 from format_check import check_format, has_email, has_phone_number, has_required_sections
 from ai_review import get_ai_review
+from scoring import compute_overall_score
 
 
 # Every item (missing keyword) needs more than a single value.
@@ -70,8 +71,12 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
         resume_text, job_description, keyword_match_percent, missing_keyword_words, readability, format_passed
     )
 
+    overall_score = compute_overall_score(
+        keyword_match_percent, grade, format_passed, ai_result["overall_fit_score"]
+    )
+
     return AnalysisResponse(
-        score = 78,
+        score = overall_score,
         score_max = 100,
         keyword_match_percent = keyword_match_percent,
         format_check_passed = format_passed,

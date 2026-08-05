@@ -25,8 +25,12 @@ RESPONSE_SCHEMA = {
             "type": "string",
             "description": "A short 2-4 word action label, e.g. 'Add Projects' or 'Quantify Impact'.",
         },
+        "overall_fit_score": {
+            "type": "integer",
+            "description": "An integer 0-100 estimating how well this resume matches the job description overall, considering both keyword alignment and the resume's general narrative fit for the role.",
+        },
     },
-    "required": ["strengths", "suggestion_text", "suggestion_action"],
+    "required": ["strengths", "suggestion_text", "suggestion_action", "overall_fit_score"],
     "additionalProperties": False,
 }
 
@@ -48,7 +52,7 @@ ALREADY-COMPUTED METRICS (use these, do not recalculate or contradict them):
 - Readability level: {readability}
 - Standard formatting check passed: {format_passed}
 
-Based on all of the above, identify 3 specific strengths of this resume relative to this job, one clear piece of actionable feedback on the resume's weakest area, and a short 2-4 word suggested action."""
+Based on all of the above, identify 3 specific strengths of this resume relative to this job, one clear piece of actionable feedback on the resume's weakest area, a short 2-4 word suggested action, and an overall fit score from 0-100."""
 
 def get_ai_review(resume_text, job_description, keyword_match_percent, missing_keywords, readability, format_passed):
     prompt = build_prompt(
