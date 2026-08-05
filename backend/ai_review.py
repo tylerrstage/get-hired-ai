@@ -52,6 +52,13 @@ ALREADY-COMPUTED METRICS (use these, do not recalculate or contradict them):
 - Readability level: {readability}
 - Standard formatting check passed: {format_passed}
 
+Score overall_fit_score using this rubric:
+- 0-20: Fundamentally different field, virtually no relevant skills.
+- 21-40: Some transferable skills, but missing most core requirements.
+- 41-60: Solid transferable skills and relevant experience, but a real gap in one or more core requirements.
+- 61-80: Strong alignment with most core requirements, only minor gaps.
+- 81-100: Excellent, near-ideal match for this role's core requirements.
+
 Based on all of the above, identify 3 specific strengths of this resume relative to this job, one clear piece of actionable feedback on the resume's weakest area, a short 2-4 word suggested action, and an overall fit score from 0-100."""
 
 def get_ai_review(resume_text, job_description, keyword_match_percent, missing_keywords, readability, format_passed):
