@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi import File, Form, UploadFile
 from pdf_parser import extract_text_from_pdf
+from fastapi.middleware.cors import CORSMiddleware
+from tokenizer import tokenize, count_word_frequencies, top_n_words
 
 
 # Every item (missing keyword) needs more than a single value.
@@ -23,8 +25,6 @@ class AnalysisResponse(BaseModel):
 
 app = FastAPI()
 
-from fastapi.middleware.cors import CORSMiddleware
-
 # Since Vite and FastAPI run on different ports, the browser, by default, blocks them from making fetch requests to one another.
 # This code intercepts every response and allows all HTTP methods (GET, POST, etc) and request headers to run from one origin to another.
 app.add_middleware(
@@ -44,6 +44,10 @@ def read_root():
 async def analyze(resume: UploadFile = File(...), job_description: str = Form(...)):
     contents = await resume.read()
     resume_text = extract_text_from_pdf(contents)
+
+    resume_tokens = tokenize(resume_text)
+    resume_frequencies = count_word_frequencies(resume_tokens)
+    print("Top resume words: ", top_n_words(resume_frequencies))
     print(resume_text)
 
     return AnalysisResponse(
