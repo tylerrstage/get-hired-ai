@@ -182,15 +182,6 @@ After clicking Analyze, it fills in with the real report — score, keyword matc
 
 ![Results detail](images/results-detail.png)
 
-To run the test suite (covers the deterministic logic — tokenizer, readability, format checking, score aggregation):
-
-```sh
-cd backend
-pytest
-```
-
-The LLM-backed review step isn't covered by these — it's evaluated separately via `eval_ai_review.py`, a small manual script run against a fixed set of resume/job description pairs, since its output is non-deterministic and each run costs real API usage.
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Roadmap / Known Limitations
@@ -227,5 +218,3 @@ See the [open issues](https://github.com/tylerrstage/get-hired-ai/issues) for a 
 [Scikit-url]: https://scikit-learn.org/
 [OpenAI.badge]: https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white
 [OpenAI-url]: https://platform.openai.com/
-[Pytest.badge]: https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white
-[Pytest-url]: https://pytest.org/
