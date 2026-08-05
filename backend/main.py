@@ -5,6 +5,7 @@ from pdf_parser import extract_text_from_pdf
 from fastapi.middleware.cors import CORSMiddleware
 from tokenizer import tokenize, count_word_frequencies, top_n_words
 from keyword_match import analyze_keyword_match
+from readability import flesch_kincaid_grade, readability_label
 
 
 # Every item (missing keyword) needs more than a single value.
@@ -57,12 +58,15 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
     print("Top resume words: ", top_n_words(resume_frequencies))
     print(resume_text)
 
+    grade = flesch_kincaid_grade(resume_text)
+    readability = readability_label(grade)
+
     return AnalysisResponse(
         score = 78,
         score_max = 100,
         keyword_match_percent = keyword_match_percent,
         format_check_passed = True,
-        readability_label = "Professional",
+        readability_label = readability,
         strengths = [
             "Action verb usage is strong in the most recent roles.",
             "Clear, parsable contact information block.",
