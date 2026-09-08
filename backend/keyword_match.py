@@ -1,4 +1,5 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Curated vocabulary of technical skills, tools, and concepts commonly named in
 # software engineering job postings. Matching is restricted to these terms
@@ -44,8 +45,9 @@ def analyze_keyword_match(resume_text: str, job_description_text: str, top_n_mis
     resume_scores = tfidf_matrix[0].toarray()[0]
     job_scores = tfidf_matrix[1].toarray()[0]
 
-    # Only vocabulary terms actually named in this job description count toward
-    # the match percentage — a skill the JD never mentions shouldn't cost points.
+    # Only vocabulary terms actually named in this job description are candidates
+    # for the missing-keywords list below — a skill the JD never mentions can't be
+    # "missing" from the resume in any way that matters.
     job_terms = [
         (word, job_score, resume_score)
         for word, job_score, resume_score in zip(feature_names, job_scores, resume_scores)
@@ -55,8 +57,17 @@ def analyze_keyword_match(resume_text: str, job_description_text: str, top_n_mis
     if not job_terms:
         return 0, []
 
-    matched_count = sum(1 for _, _, resume_score in job_terms if resume_score > 0)
-    keyword_match_percent = round(100 * matched_count / len(job_terms))
+    # cosine_similarity measures the ANGLE between the resume's and job description's
+    # TF-IDF vectors over the whole skill vocabulary (not just the job_score > 0 terms
+    # above — job_terms is only used for the missing-keyword ranking below). Because
+    # it uses the actual TF-IDF weights rather than a simple "present or not" check, a
+    # skill the JD repeats several times counts for more than one it mentions once,
+    # and partial overlap produces a smoother, in-between score instead of a hard 0/1
+    # per term. tfidf_matrix has exactly 2 rows: [0] = resume, [1] = job description.
+    # cosine_similarity returns a 2D array (each input can hold multiple vectors), so
+    # [0][0] pulls out the single scalar comparing those two rows to each other.
+    similarity = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1])[0][0]
+    keyword_match_percent = round(100 * similarity)
 
     # Ranks the JD's missing skill terms by their TF-IDF weight in the job posting,
     # so the most emphasized missing skills surface first.
