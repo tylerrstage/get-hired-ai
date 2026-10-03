@@ -1,69 +1,122 @@
+.upload-panel {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1.25rem;
+}
+
 .upload-card {
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    min-height: 260px;
-    box-sizing: border-box;
-    background-color: var(--color-surface-muted);
+    min-height: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.55);
     border-radius: var(--radius-md);
     border: 2px dashed var(--color-border-strong);
-    padding: 2rem 1.5rem;
+    padding: 1.25rem 1.5rem;
     text-align: center;
-    box-shadow: var(--shadow-float);
+    cursor: pointer;
     transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.upload-card:has(.upload-browse-btn:hover),
+.upload-card:hover,
 .upload-card:focus-within {
-    background-color: #f0f4ff;
-    border-color: #9db3ee;
+    background-color: rgba(255, 240, 246, 0.8);
+    border-color: #f2a7c3;
 }
 
 .upload-card:active {
-    background-color: #e8f0ff;
+    background-color: #ffe9f1;
+}
+
+.upload-card--filled {
+    border-style: solid;
+    border-color: #f2a7c3;
+}
+
+.upload-card--dragging,
+.upload-card--dragging:hover {
+    border-style: solid;
+    border-color: var(--color-primary);
+    background-color: #ffe9f1;
+}
+
+.upload-card--dragging .upload-icon {
+    transform: translateY(-3px);
 }
 
 .upload-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-foreground-subtle);
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background-color: var(--color-info-bg);
+    color: var(--color-primary);
     margin-bottom: 0.75rem;
+    transition: transform var(--transition-fast);
 }
 
 .upload-title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--color-foreground);
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.35rem;
 }
 
 .upload-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--color-foreground-muted);
-    margin: 0 0 1.25rem;
+    margin: 0 0 1rem;
 }
 
 .upload-browse-btn {
-    font-size: 0.9rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: var(--color-primary);
-    background-color: #e4ebfd;
+    font-family: inherit;
+    color: var(--color-primary-hover);
+    background-color: var(--color-info-bg);
     border: none;
-    border-radius: var(--radius-sm);
-    padding: 0.55rem 1.5rem;
+    border-radius: var(--radius-pill);
+    padding: 0.55rem 1.4rem;
     cursor: pointer;
     transition: background-color var(--transition-fast);
 }
 
 .upload-browse-btn:hover {
-    background-color: #d5e0fb;
+    background-color: #fbd3e2;
 }
 
 .upload-error {
     font-size: 0.85rem;
     color: var(--color-destructive);
     margin: 0.75rem 0 0;
+}
+
+/* Short windows: drop the icon so the drop zone's text still fits. */
+@media (max-height: 600px) {
+    .upload-card--dragging,
+.upload-card--dragging:hover {
+    border-style: solid;
+    border-color: var(--color-primary);
+    background-color: #ffe9f1;
+}
+
+.upload-card--dragging .upload-icon {
+    transform: translateY(-3px);
+}
+
+.upload-icon {
+        display: none;
+    }
 }

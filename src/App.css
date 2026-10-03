@@ -1,61 +1,108 @@
 .app-page {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: 100vh;
 }
 
-.app-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 3rem 4rem;
-    box-sizing: border-box;
-}
-
-.app-layout {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    width: 100%;
-}
-
-.app-left {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    flex: 0 0 380px;
-}
-
-.app-right {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+.app-main {
     flex: 1 1 auto;
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    /* Both views fit exactly one screen: content shrinks (intake boxes) or
+       scrolls internally (results columns) so the page never scrolls. */
+    justify-content: center;
+    height: 100vh;
+    height: 100dvh;
+    padding: 4.75rem 2rem 2rem;
+    overflow: hidden;
+}
+
+/* The three-column report uses most of the screen width. */
+.app-main--wide {
+    max-width: 1560px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.intake {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-height: 100%;
+    min-height: 0;
+}
+
+@keyframes fade-out-down {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+}
+
+.intake--leaving {
+    animation: fade-out-down var(--motion-duration-exit) ease-in forwards;
+    pointer-events: none;
+}
+
+.intake-grid {
+    flex: 0 1 340px;
+    min-height: 200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.intake-actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
 }
 
 .app-error {
     margin: 0;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.1rem;
     border-radius: var(--radius-sm);
     background-color: var(--color-danger-bg);
     color: var(--color-destructive);
     font-size: 0.9rem;
     font-weight: 600;
+    text-align: center;
 }
 
-@media (max-width: 900px) {
-    .app-container {
-        padding: 0 1.5rem 3rem;
+@media (max-width: 800px) {
+    .app-main {
+        padding: 5rem 1rem 3rem;
     }
 
-    .app-layout {
-        flex-direction: column;
+    /* Stacked content can't share one phone screen; allow scrolling here. */
+    .app-main {
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
     }
 
-    .app-left {
-        flex: 1 1 auto;
-        width: 100%;
+    .intake-grid {
+        flex: none;
+        grid-template-columns: 1fr;
+    }
+
+    .jobdesc-textarea,
+    .upload-card {
+        min-height: 220px;
     }
 }

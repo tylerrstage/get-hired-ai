@@ -1,10 +1,20 @@
 import { useState } from 'react'
 import './App.css'
-import NavBar from './components/NavBar'
+import Logo from './components/Logo'
 import Header from './components/Header'
 import ResumeUpload from './components/ResumeUpload'
 import JobDesc from './components/JobDesc'
+import AnalyzeButton from './components/AnalyzeButton'
 import Results from './components/Results'
+
+// "input" -> "leaving" (intake fading out) -> "results"
+const VIEW_INPUT = "input";
+const VIEW_LEAVING = "leaving";
+const VIEW_RESULTS = "results";
+
+// Keep in sync with --motion-duration-exit in index.css. A timer is used
+// rather than animationend, which never fires if the tab isn't painting.
+const EXIT_ANIMATION_MS = 320;
 
 function App() {
   const [resumeFile, setResumeFile] = useState(null);
@@ -13,6 +23,7 @@ function App() {
   const [resultVersion, setResultVersion] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [view, setView] = useState(VIEW_INPUT);
 
   const handleAnalyze = async () => {
     setIsLoading(true);
@@ -36,6 +47,9 @@ function App() {
       const data = await response.json();
       setAnalysisResult(data);
       setResultVersion((v) => v + 1);
+      setView(VIEW_LEAVING);
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setTimeout(() => setView(VIEW_RESULTS), reduceMotion ? 0 : EXIT_ANIMATION_MS);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -43,30 +57,41 @@ function App() {
     }
   };
 
+  const handleReset = () => {
+    setView(VIEW_INPUT);
+    window.scrollTo({ top: 0 });
+  };
+
+  const showResults = view === VIEW_RESULTS;
+
   return (
     <div className='app-page'>
-      <NavBar
-        onAnalyze={handleAnalyze}
-        analyzeDisabled={!resumeFile || !jobDescription || isLoading}
-        isLoading={isLoading}
-      />
-      <div className='app-container'>
-        <Header />
-        <div className='app-layout'>
-          <div className='app-left animate-in animate-in-delay-1'>
-            <ResumeUpload onFileSelect={setResumeFile} />
-            <JobDesc value={jobDescription} onChange={setJobDescription} />
-          </div>
-          <div className='app-right animate-in animate-in-delay-2'>
-            {error && (
-              <p className='app-error' role='alert'>
-                {error}
-              </p>
-            )}
-            <Results key={resultVersion} result={analysisResult} />
-          </div>
-        </div>
-      </div>
+      <Logo />
+      <main className={`app-main ${showResults ? "app-main--wide" : ""}`}>
+        {showResults ? (
+          <Results key={resultVersion} result={analysisResult} onReset={handleReset} />
+        ) : (
+          <section className={`intake ${view === VIEW_LEAVING ? "intake--leaving" : ""}`}>
+            <Header />
+            <div className='intake-grid animate-in animate-in-delay-1'>
+              <ResumeUpload file={resumeFile} onFileSelect={setResumeFile} />
+              <JobDesc value={jobDescription} onChange={setJobDescription} />
+            </div>
+            <div className='intake-actions animate-in animate-in-delay-2'>
+              {error && (
+                <p className='app-error' role='alert'>
+                  {error}
+                </p>
+              )}
+              <AnalyzeButton
+                onClick={handleAnalyze}
+                disabled={!resumeFile || !jobDescription.trim() || isLoading}
+                isLoading={isLoading}
+              />
+            </div>
+          </section>
+        )}
+      </main>
     </div>
   )
 }
