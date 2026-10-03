@@ -105,26 +105,6 @@ Resume PDF + Job Description
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Design Philosophy: Rules vs. Classical ML vs. LLM
-
-Three different techniques are doing three different jobs in this project, on purpose:
-
-**Rules, for objective, well-defined criteria.** `format_check.py` checks things like "is there an email address" and "are the standard section headers present" using plain regex. There's no ambiguity in these questions — reaching for a statistical model here would be overkill. This is the right tool exactly when the criteria are enumerable and don't require judgment.
-
-**Classical ML, for measurable-but-fuzzy patterns.** `keyword_match.py` uses TF-IDF (term frequency × inverse document frequency) and cosine similarity from scikit-learn to measure vocabulary overlap between the resume and job description. This surfaced a real, worth-knowing limitation during development: raw cosine similarity between a resume and a job posting rarely gets very high even for a strong match, because the two documents are written in completely different registers (a resume describes accomplishments, a job posting describes requirements) — genuine overlap can sit in the single digits to low twenties percent. That's not a bug, it's a property of comparing short, differently-phrased documents with a bag-of-words technique. It's a real, honest signal, just one that needs to be interpreted on its own scale rather than assumed to run 0–100 the way a percentage suggests.
-
-**An LLM, for judgment that neither rules nor statistics can provide.** `ai_review.py` sends the resume, the job description, and every metric already computed above (explicitly labeled as "already computed, do not recalculate") to an LLM via OpenAI's Structured Outputs, which guarantees the response matches a fixed JSON schema instead of hoping the model formats its reply correctly. This is where the tool does the parts a human reviewer actually adds value on: reading "5 years of React experience" and understanding that's a meaningful signal even if the job description never uses the word "React." One calibration issue came up in testing worth mentioning: an unanchored 0–100 "fit score" produced inconsistent, often overly harsh scores for resumes with real but partial relevance. Adding explicit rubric anchors to the prompt (what should score in the 0-20 / 21-40 / 41-60 / etc. ranges) made scores meaningfully more consistent — a small, concrete example of why prompt design is its own skill, not an afterthought.
-
-The overall score is a deliberately weighted combination of these signals rather than something any single technique produces on its own — see `scoring.py` for the current weights and reasoning.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Working with Claude Code
-
-This project was built end-to-end with [Claude Code](https://claude.com/claude-code) as a learning tool, not an autopilot. The working pattern for most of the backend was: Claude explained the concept (TF-IDF math, what a Python decorator actually does, why cosine similarity is the right comparison for TF-IDF vectors, HTTP/CORS/multipart-form mechanics) before any code was written, and I typed and ran the code myself so I could actually debug it when it broke — which happened, and was often the most useful part. For smaller, well-specified mechanical changes later in the project (wiring already-agreed-on data through component props) and revisions to the UI, I had Claude make the edits directly, a judgment call about when hands-on-keyboard time is actually teaching me something versus just typing.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Getting Started
 
 ### Prerequisites
