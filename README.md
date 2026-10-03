@@ -180,7 +180,7 @@ Before an analysis has run, the report panel shows an empty state:
 
 After clicking Analyze, it fills in with the real report — score, keyword match, format check, readability, strengths, missing keywords, and the AI-generated suggestion:
 
-![Results detail](images/results-detail.png)
+![Results detail](images/results.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
