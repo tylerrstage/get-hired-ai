@@ -41,11 +41,14 @@ def flesch_kincaid_grade(text: str) -> float:
 
     return round(grade, 1)
 
-def readability_label(grade: float) -> str:
-    rounded = round(grade)
+def readability_level(grade: float) -> str:
     if grade <= 8:
-        return f"Simple (Grade {rounded})"
+        return "Simple"
     elif grade <= 14:
-        return f"Professional (Grade {rounded})"
+        return "Professional"
     else:
-        return f"Overly Complex (Grade {rounded})"
+        return "Overly Complex"
+
+# Includes the grade, for the AI prompt; the UI only shows readability_level.
+def readability_label(grade: float) -> str:
+    return f"{readability_level(grade)} (Grade {round(grade)})"

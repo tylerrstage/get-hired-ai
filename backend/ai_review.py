@@ -7,6 +7,20 @@ load_dotenv()
 
 client = OpenAI(api_key = os.environ["OPENAI_API_KEY"])
 
+# TEMPORARY: set to False to call OpenAI again. While True, get_ai_review returns a hardcoded result and spends no tokens.
+USE_MOCK_AI = False
+
+MOCK_AI_RESULT = {
+    "strengths": [
+        "Hands-on React and JavaScript experience that lines up directly with the role's core frontend requirements.",
+        "Projects show end-to-end ownership, from building a FastAPI backend to shipping a working UI.",
+        "Clear, concise bullet points that keep the resume easy to scan.",
+    ],
+    "suggestion_text": "Your experience bullets describe what you built but rarely say what changed because of it. Add measurable outcomes (load time reduced, users served, hours saved) to your two most relevant projects so a reviewer can see the impact, not just the tech stack.",
+    "suggestion_action": "Quantify Impact",
+    "overall_fit_score": 72,
+}
+
 # JSON SCHEMA which provides a formal description of what shape I want the response in.
 # In this case, I want an object with a strengths array of strings, suggestion_text string, and a suggestion_action string.
 RESPONSE_SCHEMA = {
@@ -65,12 +79,15 @@ Score overall_fit_score using this rubric. The job description separates REQUIRE
 Based on all of the above, identify 3 specific strengths of this resume relative to this job, one clear piece of actionable feedback on the resume's weakest area, a short 2-4 word suggested action, and an overall fit score from 0-100."""
 
 def get_ai_review(resume_text, job_description, keyword_match_percent, missing_keywords, readability, format_passed):
+    if USE_MOCK_AI:
+        return MOCK_AI_RESULT
+
     prompt = build_prompt(
         resume_text, job_description, keyword_match_percent, missing_keywords, readability, format_passed
     )
 
     response = client.chat.completions.create(
-        model="gpt-5.4-mini",
+        model="gpt-6-luna",
         messages=[{"role": "user", "content": prompt}],
         response_format={
             "type": "json_schema",

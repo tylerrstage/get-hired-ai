@@ -5,7 +5,7 @@ from pdf_parser import extract_text_from_pdf
 from fastapi.middleware.cors import CORSMiddleware
 from tokenizer import tokenize, count_word_frequencies, top_n_words
 from keyword_match import analyze_keyword_match
-from readability import flesch_kincaid_grade, readability_label
+from readability import flesch_kincaid_grade, readability_label, readability_level
 from format_check import check_format, has_email, has_phone_number, has_required_sections
 from ai_review import get_ai_review
 from scoring import compute_overall_score
@@ -90,7 +90,7 @@ async def analyze(resume: UploadFile = File(...), job_description: str = Form(..
         score_max = 100,
         keyword_match_percent = keyword_match_percent,
         format_check_passed = format_passed,
-        readability_label = readability,
+        readability_label = readability_level(grade),
         strengths = ai_result["strengths"],
          missing_keywords = [
             MissingKeyword(label = word, variant = "danger") for word in missing_keyword_words
